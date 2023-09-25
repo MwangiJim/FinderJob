@@ -10,7 +10,7 @@ if(isset($_POST['submit-login-company'])){
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $sql = "SELECT * FROM company WHERE email = '$email'";
+        $sql = "SELECT * FROM company WHERE company_email = '$email'";
         $res = mysqli_query($conn,$sql);
         $company = mysqli_fetch_assoc($res);
 
@@ -19,13 +19,13 @@ if(isset($_POST['submit-login-company'])){
             exit();
         }
         else{
-            if(!password_verify($password,PASSWORD_DEFAULT)){
+            if(!password_verify($password,$company['password'])){
                 header('Location:./company-login.php?error=WrongPassword');
                 exit();
             }
             else{
                 session_start();
-                $_SESSION['company_session'] = $company['$company_email'];
+                $_SESSION['company_session'] = $company['company_email'];
                 header('Location:./index.company.php?login=success');
                 exit();
             }

@@ -31,11 +31,16 @@
         border:none;
         outline:none;
     }
+    .nav-bar h2 a{
+        text-decoration: none;
+        color: rgb(25, 197, 25);
+    }
 </style>
 </head>
 <body>
     <div class="nav-bar">
-        <h2>FINDERJOB</h2>
+        <h2><a href="<?php isset($_SESSION['user_session'])
+        || isset($_SESSION['company_session'])?'./index.landingpage.php':'#'?>">FINDERJOB</a></h2>
         <div class="nav">
             <li><a href="#">Community</a></li>
             <li><a href="#">Jobs</a></li>
