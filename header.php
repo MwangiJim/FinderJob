@@ -43,8 +43,8 @@
         || isset($_SESSION['company_session'])?'./index.landingpage.php':'#'?>">FINDERJOB</a></h2>
         <div class="nav">
             <li><a href="#">Community</a></li>
-            <li><a href="#">Jobs</a></li>
-            <li><a href="#">Companies</a></li>
+            <li><a href="./index.landingpage.php">Jobs</a></li>
+            <li><a href="./companies.view.php">Companies</a></li>
             <li><a href="#">Salaries</a></li>
         </div>
         <?php if(isset($_SESSION['user_session']) || isset($_SESSION['company_session'])) :?>

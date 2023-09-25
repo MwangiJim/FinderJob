@@ -8,7 +8,7 @@
  //print_r($posts);
  $job;
  if(isset($_POST['submit-job-details'])){
-  $id = $_POST['job-id-to-submit'];
+  $id = $_POST['job-id-to-submit'] ? $_POST['job-id-to-submit'] : $posts[0]['id'];
   $sql_job_details = "SELECT * FROM job_post WHERE id = $id";
   $res = mysqli_query($conn,$sql_job_details);
   $job = mysqli_fetch_assoc($res);
@@ -167,6 +167,17 @@
         .top_header_box .left_area p{
             margin: 1% 0;
         }
+        .head_logo{
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
+        .head_logo img{
+            width:40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
         .top_header_box .left_area small{
             padding:12px 0 20px;
         }
@@ -274,7 +285,10 @@
             <div class="right_info_area">
               <div class="top_header_box">
                  <div class="left_area">
-                    <h2><?php echo $job['company']?></h2>
+                    <div class="head_logo">
+                        <img src="<?php echo $job['company_logo']?>"/>
+                        <h2><?php echo $job['company']?></h2>
+                    </div>
                      <h1><?php echo $job['position']?></h1>
                      <p><?php echo $job['company_location'] . '-' . $job['job_location']?></p>
                      <small>$<?php echo $job['salary_lowest'] . '-'.'$' . $job['salary_highest']?>[FinderJob . Est]</small>
