@@ -29,8 +29,8 @@
         $company_location = $company['company_location'];
         $company_logo = $company['company_logo_img_path'];
 
-        $sql_post = "INSERT INTO job_post(position,job_location,salary_highest,salary_lowest,job_description,company,company_location,company_logo)
-         VALUES('$position','$location','$salary_highest','$salary_lowest','$description','$company_name','$company_location','$company_logo')";
+        $sql_post = "INSERT INTO job_post(position,job_location,salary_highest,salary_lowest,job_description,company,company_location,company_logo,date_posted)
+         VALUES('$position','$location','$salary_highest','$salary_lowest','$description','$company_name','$company_location','$company_logo', NOW())";
          if(mysqli_query($conn,$sql_post)){
             header('Location:./index.landingpage.php?createPost==true');
             exit();
@@ -58,12 +58,10 @@
         position: absolute;
         }
         .company_page h2{
-            text-align: center;
+            text-align: left;
+            margin:8px 0;
         }
         .form_box .form{
-            top:20%;
-            left:35%;
-            position: absolute;
             width:450px;
             height: max-content;
         }
@@ -114,41 +112,102 @@
             border-radius: 15px;
             background-color: rgb(25, 197, 25);
         }
+        .form-box{
+            display:flex;
+            justify-content: space-between;
+        }
+        .left-form-box{
+            flex-basis: 35%;
+            padding: 10px;
+        }
+        .right-form-box{
+            flex-basis: 60%;
+            display:block;
+        }
+        .left-form-box img{
+            width:100%;
+            object-fit: cover;
+            height:20vh;
+        }
+        .overview{
+            box-shadow: 2px 2px 7px #000;
+            border-radius: 5px;
+            background-color: #fff;
+            padding: 10px;
+        }
+        .overview-info{
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .left-overview h4{
+            line-height: 30px;
+            font-weight: 300;
+        }
+        .right-overview h4{
+            line-height: 30px;
+            font-weight: 300;
+        }
     </style>
 </head>
 <body>
     <section class="company_page">
         <?php include './header.php'?>
-        <h2>Post a Job Description</h2>
-        <div class="form_box">
-           <form action="./index.company.php" method="POST" class="form">
-              <label>Position</label>
-              <br/>
-              <input type="text" name="position" placeholder="Job Position">
-              <br/>
-              <label>Salary Lowest $/year</label>
-              <br/>
-              <input type="number" name="salary-lowest" placeholder="Salary Lowest $/year">
-              <br/>
-              <label>Salary Highest $/year</label>
-              <br/>
-              <input type="number" name="salary-highest" placeholder="Salary Highest $/year">
-              <br/>
-              <label>Position</label>
-              <br/>
-              <textarea type="text" name="description" placeholder="Job Description"></textarea>
-              <br/>
-              <label>Location</label>
-              <br/>
-              <select name="location">
-                <option>---Choose Location---</option>
-                <option value="Remote">Remote</option>
-                <option value="Onsite">Onsite</option>
-                <option value="Hybrid">Hybrid</option>
-              </select>
-              <br/>
-              <button type="submit" name="create-job-post">Create Job Post</button>
-           </form>
+        <div class="form-box">
+            <div class="left-form-box">
+               <img src="<?php echo $company['company_logo_img_path']?>"/>
+               <h1><?php echo $company['company_name']?></h1>
+               <div class="overview">
+                <h1><?php echo $company['company_name']?> Overview</h1>
+                <div class="overview-info">
+                    <div class="left-overview">
+                        <h4><?php echo $company['global_company_size']?> Employees</h4>
+                        <h4>Type : <?php  echo $company['company_type']?></h4>
+                        <h4>Revenue : <?php echo $company['revenue']?></h4>
+                    </div>
+                    <div class="right-overview">
+                        <h4>Location : <?php echo $company['company_location']?></h4>
+                        <h4>Founded in <?php echo $company['date_founded']?></h4>
+                    </div>
+                </div>
+                <div class="description">
+                    <p><?php echo $company['company_description']?></p>
+                </div>
+               </div>
+            </div>
+            <div class="right-form-box">
+            <h2>Post a Job Description</h2>
+              <div class="form_box">
+                <form action="./index.company.php" method="POST" class="form">
+                    <label>Position</label>
+                    <br/>
+                    <input type="text" name="position" placeholder="Job Position">
+                    <br/>
+                    <label>Salary Lowest $/year</label>
+                    <br/>
+                    <input type="number" name="salary-lowest" placeholder="Salary Lowest $/year">
+                    <br/>
+                    <label>Salary Highest $/year</label>
+                    <br/>
+                    <input type="number" name="salary-highest" placeholder="Salary Highest $/year">
+                    <br/>
+                    <label>Position</label>
+                    <br/>
+                    <textarea type="text" name="description" placeholder="Job Description"></textarea>
+                    <br/>
+                    <label>Location</label>
+                    <br/>
+                    <select name="location">
+                        <option>---Choose Location---</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Onsite">Onsite</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+                    <br/>
+                    <button type="submit" name="create-job-post">Create Job Post</button>
+                </form>
+                </div>
+            </div>
         </div>
     </section>
 </body>

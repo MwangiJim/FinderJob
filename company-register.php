@@ -197,7 +197,10 @@
                 <option value="20-70 employees">20-70 employees</option>
                 <option value="100-500 employees">100-500 employees</option>
                 <option value="500-1000 employees">500-1000 employees</option>
-                <option value="1000 + employees">1000 + employees</option>
+                <option value="1000-2500 employees">1000-2500 employees</option>
+                <option value="5000-10000 + employees">5000-10000 + employees</option>
+                <option value="20000-50000 + employees">20000-50000 + employees</option>
+                <option value="100000 + employees">100000 + employees</option>
             </select>
             <br/>
             <label>Company Type</label>

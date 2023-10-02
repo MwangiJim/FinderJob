@@ -55,6 +55,11 @@
                     <li><a href="./user-login.php">User</a></li>
                 </div>
             <?php endif ?>
+            <?php if(isset($_SESSION['company_session'])):?>
+                <a href="./index.company.php">Post Job</a>
+                <?php else :?>
+                    
+                <?php endif?>
         <div class="right_nav">
             <img src = "./images/search.png"/>
             <h4>Search</h4>

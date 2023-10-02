@@ -6,6 +6,26 @@
   $res = mysqli_query($conn,$sql);
   $companies = mysqli_fetch_all($res,MYSQLI_ASSOC);
 //print_r($companies[0]);
+$company_found;
+if(isset($_POST['submit-search'])){
+    if(empty($_POST['search-name'])){
+        header('Location:./companies.view.php?error=NoSearchValue');
+    }
+    else{
+        $search_value = $_POST['search-name'];
+        //echo $search_value;
+        $sql_search = "SELECT * FROM company WHERE company_name = '$search_value'";
+        if(!mysqli_query($conn,$sql_search)){
+           header('Location:./companies.view.php?error=CompanyNotFound');
+           exit();
+        }
+        else{
+            $response = mysqli_query($conn,$sql_search);
+            $company_found = mysqli_fetch_assoc($response);
+            //print_r($company_found);
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -152,14 +172,15 @@
         <div class="search-input-box">
             <p>Looking up an Employer?</p>
             <form action="./companies.view.php" method="POST">
-                <input type="text" name="search-name" placeholder="Search Company"/>
+                <input type="text" name="search-name" placeholder="Search Company..Type All to View All"/>
                 <button type="submit" name="submit-search">Search</button>
             </form>
         </div>
         <div class="companies-list-box">
             <div class="left-companies-list-box"></div>
             <div class="right-companies-list-box">
-                 <?php foreach($companies as $company) :?>
+                 <?php if(!$company_found):?>
+                    <?php foreach($companies as $company) :?>
                     <div class="company-box">
                         <div class="company-top-box">
                             <div class="company-box-left">
@@ -186,6 +207,33 @@
                         </div>
                     </div>
                  <?php endforeach?>
+                    <?php else :?>
+                        <div class="company-box">
+                        <div class="company-top-box">
+                            <div class="company-box-left">
+                                <img src="<?php echo $company_found['company_logo_img_path']?>"/>
+                                <div class="company-info">
+                                    <h2><?php echo $company_found['company_name']?></h2>
+                                    <p>3.8</p>
+                                </div>
+                            </div>
+                            <div class="company-box-right">
+                                <div><h3>181.1K</h3><p>Reviews</p></div>
+                                <div><h3>43.8K</h3><p>Jobs</p></div>
+                                <div><h3>191.8K</h3><p>Salaries</p></div>
+                            </div>
+                        </div>
+                        <div class="location-info">
+                                <div><h3>Location</h3><p><?php echo $company_found['company_location']?></p></div>
+                                <div><h3>Global Company Size</h3><?php echo $company_found['global_company_size']?></div>
+                                <div><h3>Industry</h3><p><?php echo $company_found['company_type']?></p></div>
+                        </div>
+                        <div class="description">
+                            <h3>Description</h3>
+                            <p><?php echo $company_found['company_description']?></p>
+                        </div>
+                    </div>
+                    <?php endif?>
             </div>
         </div>
     </section>
