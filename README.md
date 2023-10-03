@@ -1,7 +1,7 @@
 # FinderJob
 A website for developers to search for jobs,employers to post jobs and developers can get more insight about the company
 
-![Static Badge](https://img.shields.io/badge/development%20-%20gray)
+https://img.shields.io/badge/Wordpress-21759B?style=for-the-badge&logo=wordpress&logoColor=white
 ![Static Badge](https://img.shields.io/badge/php%20-8.0%20-%20purple)
 ![Static Badge](https://img.shields.io/badge/version-1.0.0-green)
 
