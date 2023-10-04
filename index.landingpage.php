@@ -5,7 +5,7 @@
  $sql = "SELECT * FROM job_post";
  $response = mysqli_query($conn,$sql);
  $posts = mysqli_fetch_all($response,MYSQLI_ASSOC);
- //echo $posts[1]['id'];
+ //echo $posts[9]['date_posted'];
  $job;
  $job_posts_search;
  if(isset($_POST['submit-job-details'])){
@@ -31,7 +31,7 @@
         $location = $_POST['Location'];
         //echo $keyword;
 
-         $sql_search_val = "SELECT * FROM job_post WHERE position = '$keyword' AND company_location = '$location'";
+         $sql_search_val = "SELECT * FROM job_post WHERE position = '$keyword'";
          if(!mysqli_query($conn,$sql_search_val)){
             header('Location:./index.landingpage.php?error=Errorsearch&CouldntFind');
             exit();
@@ -40,7 +40,7 @@
             $res = mysqli_query($conn,$sql_search_val);
             $job_posts_search = mysqli_fetch_all($res,MYSQLI_ASSOC);
            // header('location:./index.landingpage.php?msg=true&found=true');
-            print_r($job_posts_search);
+          //  print_r($job_posts_search);
             //exit();
         }
     }
@@ -253,7 +253,7 @@
                <form action="./index.landingpage.php" method = "post">
                <div class="search-box">
                      <button type="submit" name="submit-search-value"><img src="./images/search.png"/></button>
-                    <input class ="input-search" type="text" name="search-keyword" placeholder="Find You Job"/>
+                    <input class ="input-search" type="text" name="search-keyword" placeholder="Find You Job ...Type All"/>
                     <img src="./images/location.png"/>
                     <input class ="input-location" type="text" name="Location" placeholder="Location"/>
                 </div>
@@ -300,8 +300,8 @@
             </div>
           <div class="box_jobs">
             <div class="left_info_area">
-               <?php if(count($posts) >= 1) :?>
-                <?php foreach($posts as $post) : ?>
+               <?php if($job_posts_search) :?>
+                <?php foreach($job_posts_search as $post) : ?>
                     <form action="./index.landingpage.php" method="POST">
                     <div class="post_template">
                         <div class="top_head">
@@ -322,8 +322,8 @@
                      </div>    
                     </form>
                     <?php endforeach?>
-               <?php elseif(count($job_posts_search) >= 1) :?>
-                <?php foreach($job_posts_search as $post) : ?>
+               <?php else  :?>
+                <?php foreach($posts as $post) : ?>
                     <form action="./index.landingpage.php" method="POST">
                     <div class="post_template">
                         <div class="top_head">
@@ -351,7 +351,12 @@
                  <div class="left_area">
                     <div class="head_logo">
                         <img src="<?php echo $job['company_logo']?>"/>
-                        <h2><?php echo $job['company']?></h2>
+                        <form action="./company.overview.php" method = "POST">
+                            <input type="hidden" name="company-id" value="<?php echo $job['company']?>"/>
+                           <button type="submit" name="company-to-view" 
+                           style="border:none;outline:none;background:transparent;cursor:pointer"
+                           ><h2><?php echo $job['company']?></h2></button>
+                        </form>
                     </div>
                      <h1><?php echo $job['position']?></h1>
                      <p><?php echo $job['company_location'] . '-' . $job['job_location']?></p>

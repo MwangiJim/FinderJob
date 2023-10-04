@@ -2,8 +2,6 @@
    if(isset($_POST['submit=logout'])){
       session_unset();
       session_destroy();
-      header('Location:./user-login.php?logout=true');
-      exit();
    }
 ?>
 
