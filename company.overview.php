@@ -54,6 +54,23 @@
             justify-content: space-between;
             align-items: center;
         }
+        @media (max-width:500px) {
+            .container_cover{
+                height:10vh;
+            }
+            .container_bottom{
+                display:flex;
+                justify-content: center;
+                align-items: center;    
+                flex-direction: column;
+            }
+            .left_container div{
+                padding: 5px 3px;
+            }
+            .left_container div h4{
+                font-size: 12px;
+            }
+        }
         .left_container{
             flex-basis: 55%;
             display:flex;

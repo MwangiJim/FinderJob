@@ -2,6 +2,7 @@
  session_start();
  include './config/myjob.configdb.php';
 
+
  $sql = "SELECT * FROM job_post";
  $response = mysqli_query($conn,$sql);
  $posts = mysqli_fetch_all($response,MYSQLI_ASSOC);
@@ -90,12 +91,43 @@
             justify-content: space-between;
             margin-top: 1%;
         }
+        .search-box{
+            width:500px;
+        }
+        @media screen and (max-width:500px){
+            .box_jobs{
+                display:block;
+            }
+            .left_info_area{
+                flex-basis: 100%;
+            }
+            .right_info_area{
+                flex-basis: 100%;
+            }
+            .select_area{
+                display: none;
+            }
+            .search_bar .search-box{
+                width:350px;
+                height:35px;
+            }
+            .search_bar .search-box .input-location{
+                width:60px;
+            }
+            .top_header_box .right_area button{
+                padding: 9px 35px;
+                font-size: 14px;
+            }
+            .right_info_area{
+                background-color: #fff;
+            }
+        }
         .left_info_area{
             flex-basis: 35%;
             width:100%;
             height:50vh;
             max-height: 50vh;
-            overflow: scroll;
+            overflow-y: scroll;
         }
         .left_info_area::-webkit-scrollbar{
             width:5px;
@@ -228,10 +260,11 @@
             justify-content: space-between;
             align-items: center;
             color:#fff;
+            border-radius: 10px;
         }
         .top_header_box .right_area button img{
-        width:20px;
-        height:20px;
+        width:15px;
+        height:15px;
         }
         .job_description{
             margin-top: 15px;
@@ -363,11 +396,12 @@
                      <small>$<?php echo $job['salary_lowest'] . '-'.'$' . $job['salary_highest']?>[FinderJob . Est]</small>
                  </div>
                  <div class="right_area">
-                    <button disabled=<?php isset($_SESSION['company_session'])?true:false ?>><img src="./images/srike.png"/>Finder Apply</button>
+                    <button disabled=<?php isset($_SESSION['company_session'])?true:false ?>><img src="./images/srike.png"/>FinderApply</button>
                     <button>Save</button>
                  </div>
               </div>
               <div class="job_description">
+                <h4>Job Description</h4>
                 <?php echo $job['job_description']?>
               </div>
             </div>

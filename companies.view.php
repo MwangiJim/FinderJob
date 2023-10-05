@@ -50,10 +50,11 @@ if(isset($_POST['submit-search'])){
         }
         .left_view{
             flex-basis: 50%;
-            background-image: url('./images/bg_companies.jpg');
-            background-position: center;
-            background-size: cover;
-            height: 35vh;
+        }
+        .left_view img{
+            width:100%;
+            height:35vh;
+            object-fit: cover;
         }
         .right_view{
             flex-basis:45%;
@@ -92,6 +93,46 @@ if(isset($_POST['submit-search'])){
             display:flex;
             justify-content: center;
             align-items: center;
+        }
+        @media (max-width:500px) {
+            .companies-list-box{
+                flex-direction: column;
+            }
+            .right-companies-list-box{
+                flex-basis: 100%;
+            }
+            .textbox{
+                flex-direction: column;
+            }
+            .left_view{
+                flex-basis: 100%;
+            }
+            .left_view img{
+                width:400px;
+                height:20vh;
+            }
+            .right_view{
+                flex-basis: 100%;
+            }
+            .search-input-box p{
+              font-size: 13px;
+              display: none;
+            }
+            .search-input-box input{
+                width: 200px;
+            }
+            .search-input-box button{
+                padding: 7px 20px;
+            }
+            .company-box-right div{
+                margin: 0 5px;
+            }
+            .company-box-right div h3{
+              font-size: 16px;
+            }
+            .company-box-right div p{
+                font-size: 12px;
+            }
         }
         .left-companies-list-box{
             flex-basis:35%;
@@ -160,7 +201,9 @@ if(isset($_POST['submit-search'])){
     <section class="companies_view">
         <?php include './header.php'?>
         <div class="textbox">
-            <div class="left_view"></div>
+            <div class="left_view">
+                <img src="./images/bg_companies.jpg"/>
+            </div>
             <div class="right_view">
                 <h2>Get the Right Company For You</h2>
                 <div class="info">
@@ -186,7 +229,10 @@ if(isset($_POST['submit-search'])){
                             <div class="company-box-left">
                                 <img src="<?php echo $company['company_logo_img_path']?>"/>
                                 <div class="company-info">
-                                    <h2><?php echo $company['company_name']?></h2>
+                                    <form action="./company.overview.php" method="POST">
+                                        <input type="hidden" name="company-id" value="<?php echo $company['company_name']?>"/>
+                                        <button style="outline:none;border:none;background:transparent;cursor:pointer;" type="submit" name="company-to-view"><h2><?php echo $company['company_name']?></h2></button>
+                                    </form>
                                     <p>3.8</p>
                                 </div>
                             </div>
@@ -213,7 +259,10 @@ if(isset($_POST['submit-search'])){
                             <div class="company-box-left">
                                 <img src="<?php echo $company_found['company_logo_img_path']?>"/>
                                 <div class="company-info">
-                                    <h2><?php echo $company_found['company_name']?></h2>
+                                <form action="./company.overview.php" method="POST">
+                                        <input type="hidden" name="company-id" value="<?php echo $company_found['company_name']?>"/>
+                                        <button style="outline:none;border:none;background:transparent;cursor:pointer;" type="submit" name="company-to-view"><h2><?php echo $company_found['company_name']?></h2></button>
+                                    </form>
                                     <p>3.8</p>
                                 </div>
                             </div>

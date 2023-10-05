@@ -33,6 +33,36 @@
         text-decoration: none;
         color: rgb(25, 197, 25);
     }
+    .menu{
+        display: none;
+    }
+    @media (max-width:500px){
+        .menu{
+            display: block;
+            position: relative;
+            z-index: 5;
+        }
+        .right_nav .img{
+            display: none;
+        }
+        .nav-bar .nav{
+            flex-direction: column;
+            background-color: aliceblue;
+            width:100%;
+            height:100vh;
+            top:0;
+            right:0;
+            position: absolute;
+            z-index: 2;
+            display: none;
+        }
+        .nav li{
+            padding: 10px 30px;
+            margin: 2%;
+            border-bottom: 1px solid #d3d3d3;
+
+        }
+    }
 </style>
 </head>
 <body>
@@ -59,17 +89,33 @@
                     
                 <?php endif?>
         <div class="right_nav">
-            <img src = "./images/search.png"/>
-            <h4>Search</h4>
-            <img src="./images/bell_plus.png"/>
-            <img src="./images/profile.png"/>
+            <img src = "./images/search.png" style="margin-right:10px;"/>
+            <h4 class="img">Search</h4>
+            <img src="./images/bell_plus.png" class="img"/>
+            <img src="./images/profile.png" class="img"/>
             <?php if(isset($_SESSION['user_session']) || isset($_SESSION['company_session'])) : ?>
                 <form action="./header.php" method="POST">
-                    <button type="submit" name="submit-logout"><img src="./images/logout.png"/></button>
+                    <button type="submit" name="submit-logout"  style="margin-right:15px;"><img src="./images/logout.png"/></button>
                 </form>
                 <?php else :?>
             <?php endif ?>
+            <img src="./images/menu.png" style="cursor:pointer;" class = "menu"/>
         </div>
     </div>
+    <script>
+        let nav = document.querySelector('.nav');
+        let menu = document.querySelector('.menu');
+
+        menu.onclick=()=>{
+            if(nav.style.display === "none"){
+                nav.style.display = "block";
+                menu.src = "./images/close.png";
+            }
+            else{
+                nav.style.display = "none";
+                menu.src = "./images/menu.png";
+            }
+        }
+    </script>
 </body>
 </html>

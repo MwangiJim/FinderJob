@@ -26,6 +26,7 @@
           else{
             session_start();
             $_SESSION['user_session'] = $user['email'];
+            setcookie("name","User",time() + (86400 * 30), "/");
             header('Location:./index.landingpage.php?login=success');
             exit();
           }
@@ -39,6 +40,35 @@
     <title>JobFinder | Login</title>
     <link rel="stylesheet" href="./styles.css"/>
 </head>
+<style>
+     @media (max-width:500px){
+        .menu{
+            display: block;
+            position: relative;
+            z-index: 5;
+        }
+        .right_nav .img{
+            display: none;
+        }
+        .nav-bar .nav{
+            flex-direction: column;
+            background-color: aliceblue;
+            width:100%;
+            height:100vh;
+            top:0;
+            right:0;
+            position: absolute;
+            z-index: 2;
+            display: none;
+        }
+        .nav li{
+            padding: 10px 30px;
+            margin: 2%;
+            border-bottom: 1px solid #d3d3d3;
+
+        }
+    }
+</style>
 <body>
     <section class="user-login">
         <?php include './header.php'?>
