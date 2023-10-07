@@ -4,7 +4,8 @@ A website for developers to search for jobs,employers to post jobs and developer
 ![Static Badge](https://img.shields.io/badge/issues-2-green)
 ![Static Badge](https://img.shields.io/badge/php-8.0.0-blue)
 ![Static Badge](https://img.shields.io/badge/version-1.0.0-green)
-![Static Badge](https://img.shields.io/badge/build-failing-orange)
+![Static Badge](https://img.shields.io/badge/build-passing-green)
+
 
 ![Homepage for FinderJob](/images/finder1.jpg)
 
