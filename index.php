@@ -24,7 +24,7 @@
 
  if(isset($_POST['submit-search-value'])){
     if(empty($_POST['search-keyword'])){
-        header('Location:./index.landingpage.php?error=SearchValueNull');
+        header('Location:./index.php?error=SearchValueNull');
         exit();
     }
     else{
@@ -34,7 +34,7 @@
 
          $sql_search_val = "SELECT * FROM job_post WHERE position = '$keyword'";
          if(!mysqli_query($conn,$sql_search_val)){
-            header('Location:./index.landingpage.php?error=Errorsearch&CouldntFind');
+            header('Location:./index.php?error=Errorsearch&CouldntFind');
             exit();
         }
         else{
@@ -222,13 +222,13 @@
             display: flex;
             justify-content: space-between;
         }
-        .top_header_box .left_area{
-            flex-basis: 40%;
+        .top_header_box .left_box_area{
+            flex-basis: 45%;
         }
-        .top_header_box .left_area h1{
+        .top_header_box .left_box_area h1{
             margin: 2% 0;
         }
-        .top_header_box .left_area p{
+        .top_header_box .left_box_area p{
             margin: 1% 0;
         }
         .head_logo{
@@ -283,7 +283,7 @@
         <?php include './header.php'?>
        <div class="top_bar">
        <div class="search_bar">
-               <form action="./index.landingpage.php" method = "post">
+               <form action="./index.php" method = "post">
                <div class="search-box">
                      <button type="submit" name="submit-search-value"><img src="./images/search.png"/></button>
                     <input class ="input-search" type="text" name="search-keyword" placeholder="Find You Job ...Type All"/>
@@ -335,7 +335,7 @@
             <div class="left_info_area">
                <?php if($job_posts_search) :?>
                 <?php foreach($job_posts_search as $post) : ?>
-                    <form action="./index.landingpage.php" method="POST">
+                    <form action="./index.php" method="POST">
                     <div class="post_template">
                         <div class="top_head">
                             <div class="top_head_left">
@@ -349,6 +349,8 @@
                             <h3><?php echo $post['position']?></h3>
                             <p><?php echo $post['job_location'] . ',' . $post['company_location']?></p>
                             <h2>$<?php echo $post['salary_lowest'].'-'.'$'.$post['salary_highest']?></h2><small>[Employer est]</small>
+                            <br/>
+                            <small>Posted on <?php echo $post['date_posted']?></small>
                         </div>
                         <input type="hidden" name="job-id-to-submit" value="<?php echo $post['id']?>">
                         <button type="submit" name="submit-job-details"><img src="./images/srike.png"/>Apply</button>
@@ -357,7 +359,7 @@
                     <?php endforeach?>
                <?php else  :?>
                 <?php foreach($posts as $post) : ?>
-                    <form action="./index.landingpage.php" method="POST">
+                    <form action="./index.php" method="POST">
                     <div class="post_template">
                         <div class="top_head">
                             <div class="top_head_left">
@@ -371,6 +373,8 @@
                             <h3><?php echo $post['position']?></h3>
                             <p><?php echo $post['job_location'] . ',' . $post['company_location']?></p>
                             <h2>$<?php echo $post['salary_lowest'].'-'.'$'.$post['salary_highest']?></h2><small>[Employer est]</small>
+                            <br/>
+                            <small>Posted on <?php echo $post['date_posted']?></small>
                         </div>
                         <input type="hidden" name="job-id-to-submit" value="<?php echo $post['id']?>">
                         <button type="submit" name="submit-job-details"><img src="./images/srike.png"/>Apply</button>
@@ -381,7 +385,7 @@
             </div>
             <div class="right_info_area">
               <div class="top_header_box">
-                 <div class="left_area">
+                 <div class="left_box_area">
                     <div class="head_logo">
                         <img src="<?php echo $job['company_logo']?>"/>
                         <form action="./company.overview.php" method = "POST">
@@ -396,7 +400,13 @@
                      <small>$<?php echo $job['salary_lowest'] . '-'.'$' . $job['salary_highest']?>[FinderJob . Est]</small>
                  </div>
                  <div class="right_area">
-                    <button disabled=<?php isset($_SESSION['company_session'])?true:false ?>><img src="./images/srike.png"/>FinderApply</button>
+                  <?php if(isset($_SESSION['user_session'])) :?>
+                        <form action="./job_application.php" method="POST">
+                            <input type="hidden" name="company-id" value="<?php echo $job['id'] ?>"/>
+                            <button type="submit" name="submit-job-application"><img src="./images/srike.png"/>FinderApply</button>
+                       </form>
+                    <?php else :?>
+                        <?php endif?>
                     <button>Save</button>
                  </div>
               </div>

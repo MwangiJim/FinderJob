@@ -1,5 +1,6 @@
 <?php 
-   if(isset($_POST['submit=logout'])){
+   if(isset($_POST['submit-logout'])){
+      session_start();
       session_unset();
       session_destroy();
    }
@@ -37,6 +38,14 @@
         display: none;
     }
     @media (max-width:500px){
+        .mid li a{
+            font-size: 13px;
+        }
+        .nav-bar h2 a{
+        text-decoration: none;
+        color: rgb(25, 197, 25);
+        font-size: 18px;
+        }    
         .menu{
             display: block;
             position: relative;
@@ -68,26 +77,25 @@
 <body>
     <div class="nav-bar">
         <h2><a href="<?php isset($_SESSION['user_session'])
-        || isset($_SESSION['company_session'])?'./index.landingpage.php':'#'?>">FINDERJOB</a></h2>
+        || isset($_SESSION['company_session'])?'./index.php':'#'?>">FINDERJOB</a></h2>
         <div class="nav">
             <li><a href="#">Community</a></li>
-            <li><a href="./index.landingpage.php">Jobs</a></li>
+            <li><a href="./index.php">Jobs</a></li>
             <li><a href="./companies.view.php">Companies</a></li>
             <li><a href="#">Salaries</a></li>
+           <?php if(isset($_SESSION['company_session'])):?>
+              <li><a href="./index.company.php">For Employers</a></li>
+              <?php else :?>
+            <?php endif?>
         </div>
         <?php if(isset($_SESSION['user_session']) || isset($_SESSION['company_session'])) :?>
             <?php else : ?>
                 <div class="mid">
                     <li><a href="#">Admin</a></li>
-                    <li><a href="./company-login.php">Post Job</a></li>
+                    <li><a href="./company-login.php">Employer</a></li>
                     <li><a href="./user-login.php">User</a></li>
                 </div>
             <?php endif ?>
-            <?php if(isset($_SESSION['company_session'])):?>
-                <a href="./index.company.php">Post Job</a>
-                <?php else :?>
-                    
-                <?php endif?>
         <div class="right_nav">
             <img src = "./images/search.png" style="margin-right:10px;"/>
             <h4 class="img">Search</h4>

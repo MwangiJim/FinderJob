@@ -26,7 +26,7 @@ if(isset($_POST['submit-login-company'])){
             else{
                 session_start();
                 $_SESSION['company_session'] = $company['company_email'];
-                header('Location:./index.company.php?login=success');
+                header('Location:./index.php?login=success');
                 exit();
             }
         }
@@ -47,11 +47,28 @@ if(isset($_POST['submit-login-company'])){
         left:0;
         position: absolute;
         }
+        .header-box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        @media(max-width:500px){
+        .header-box h1{
+            font-size: 18px;
+        }
+        .header-box p{
+            font-size: 14px;
+        }
         .company-login .form{
-            top:50%;
-            left:50%;
-            transform: translate(-50%,-50%);
-            position: absolute;
+            width:300px;
+            height: max-content;
+        }
+        .company-login .form input{
+            width:200px;
+        }
+    }
+        .company-login .form{
             width:450px;
             height: max-content;
         }
@@ -87,11 +104,23 @@ if(isset($_POST['submit-login-company'])){
         .company-login .form p{
             text-align: center;
         }
+        .comp_box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
     </style>
 </head>
 <body>
     <section class="company-login">
         <?php include './header.php'?>
+        <div class="comp_box">
+        <div class="header-box">
+            <h1>Your Employer Vision starts here.</h1>
+            <p>Legit Reviews rich storytelling and powerful insights found on FinderJob to help you source tech pool talent</p>
+            <img src="./images/office.jpg"/>
+        </div>
         <form action="./company-login.php" method="POST" class="form">
             <h2>Company Login</h2>
             <label>Email</label>
@@ -106,6 +135,7 @@ if(isset($_POST['submit-login-company'])){
             <br/>
             <p>No Account?<a href="./company-register.php">Register Here</a></p>
         </form>
+        </div>
     </section>
 </body>
 </html>

@@ -116,6 +116,20 @@
             display:flex;
             justify-content: space-between;
         }
+        @media (max-width:500px) {
+            .form-box{
+                display:flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: column;
+            }
+            .left-form-box{
+                flex-basis: 100%;
+            }
+            .right-form-box{
+                flex-basis: 100%;
+            }
+        }
         .left-form-box{
             flex-basis: 35%;
             padding: 10px;

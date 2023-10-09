@@ -113,18 +113,21 @@
     position: absolute;
     }
     .company_body .form{
-        top:20%;
-        left:30%;
-        position: absolute;
         width:450px;
         height: max-content;
     }
-    .company_body .form input{
+    .comp_box{
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .company_body .form .input{
         height: 45px;
         width:95%;
         outline: none;
         border: 1px solid #000;
-        border-radius: 8px;
+        border-radius: 25px;
         margin: 15px 0;
         padding: 0 15px;
     }
@@ -133,7 +136,7 @@
         width:460px;
         outline: none;
         border: 1px solid #000;
-        border-radius: 8px;
+        border-radius: 25px;
         margin: 15px 0;
         padding: 0 15px;
     }
@@ -169,24 +172,77 @@
     .company_body .form p{
         text-align: center;
     }
+    .header-box{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 2% 0;
+    }
+    .header-box img{
+        width:500px;
+        height:35vh;
+        object-fit: cover;
+    }
+    .header-box button{
+        background-color: green;
+        color: #fff;
+        border: none;
+        outline: none;
+        padding: 10px 35px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+    @media(max-width:500px){
+        .header-box h1{
+            font-size: 18px;
+        }
+        .header-box p{
+            font-size: 14px;
+        }
+    }
+    .file-input{
+        border: 3px dashed green;
+        padding: 5px;
+        width:100%;
+        margin:2% 0;
+        height:35px;
+        cursor: pointer;
+        border-radius: 25px;
+    }
+    .file-input::-webkit-file-upload-button{
+        background: linear-gradient(30deg,green,#000);
+        border-radius: 20px;
+        padding: 12px 39px;
+        border:0;
+        outline:none;
+        color: #fff;
+    }
     </style>
 </head>
 <body>
     <section class="company_body">
         <?php include './header.php'?>
+       <div class="comp_box">
+       <div class="header-box">
+            <h1>Your Employer Vision starts here.</h1>
+            <p>Legit Reviews rich storytelling and powerful insights found on FinderJob to help you source tech pool talent</p>
+            <img src="./images/office_work.jpg"/>
+            <button>Get Started</button>
+        </div>
         <form action="./company-register.php" method = "POST" class="form" enctype="multipart/form-data">
             <h2>Company Account</h2>
             <label>Company Name</label>
             <br/>
-            <input type="text" name="company-name" placeholder="Company Name"/>
+            <input class="input" type="text" name="company-name" placeholder="Company Name"/>
             <br/>
             <label>Company Email</label>
             <br/>
-            <input type="email" name="company-email" placeholder="Company Name"/>
+            <input class="input" type="email" name="company-email" placeholder="Company Name"/>
             <br/>
             <label>Company Location</label>
             <br/>
-            <input type="text" name="company-location" placeholder="Company Location"/>
+            <input class="input" type="text" name="company-location" placeholder="Company Location"/>
             <br/>
             <label>Global Company Size</label>
             <br/>
@@ -219,7 +275,7 @@
             <br/>
             <label>Date Founded</label>
             <br/>
-            <input type="date" name="date-founded" />
+            <input class="input" type="date" name="date-founded" />
             <br/>
             <label>Company Description</label>
             <br/>
@@ -227,19 +283,20 @@
             <br/>
             <label>Company Revenue</label>
             <br/>
-            <input type="text" name="revenue" placeholder="Company Revenue $/year"/>
+            <input class="input" type="text" name="revenue" placeholder="Company Revenue $/year"/>
             <br/>
             <label>Password</label>
              <br/>
-             <input type="password" name="password"/>
+             <input class="input" type="password" name="password"/>
              <br/>
             <label>Company Banner</label>
             <br/>
-            <input type="file" name="file"/>
+            <input type="file" name="file" class="file-input"/>
             <button name="submit-company-register" type ="submit">Create Employer Account</button>
             <br/>
             <p>Have Company Account?<a href="./company-login.php">Login Here</a></p>
         </form>
+       </div>
     </section>
 </body>
 </html>

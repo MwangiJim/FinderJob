@@ -27,7 +27,7 @@
             session_start();
             $_SESSION['user_session'] = $user['email'];
             setcookie("name","User",time() + (86400 * 30), "/");
-            header('Location:./index.landingpage.php?login=success');
+            header('Location:./index.php?login=success');
             exit();
           }
        }
