@@ -46,6 +46,13 @@
         }
     }
  }
+ if(isset($_SESSION['user_session'])){
+    $email_check = $_SESSION['user_session'];
+    $sql_check_applied = "SELECT * FROM jop_application WHERE email='$email_check'";
+    $response = mysqli_query($conn,$sql_check_applied);
+    $applications = mysqli_fetch_all($response,MYSQLI_ASSOC);
+ }
+ //number of applicants
 ?>
 
 <!DOCTYPE html>
@@ -400,13 +407,20 @@
                      <small>$<?php echo $job['salary_lowest'] . '-'.'$' . $job['salary_highest']?>[FinderJob . Est]</small>
                  </div>
                  <div class="right_area">
-                  <?php if(isset($_SESSION['user_session'])) :?>
-                        <form action="./job_application.php" method="POST">
-                            <input type="hidden" name="company-id" value="<?php echo $job['id'] ?>"/>
-                            <button type="submit" name="submit-job-application"><img src="./images/srike.png"/>FinderApply</button>
-                       </form>
-                    <?php else :?>
-                        <?php endif?>
+                 <?php if(isset($_SESSION['user_session'])) :?>
+                  <?php foreach($applications as $application) :?>
+                        <?php if($application['company_name'] !== $job['company']) :?>
+                            <form action="./job_application.php" method="POST">
+                                <input type="hidden" name="company-id" value="<?php echo $job['id'] ?>"/>
+                                <button type="submit" name="submit-job-application"><img src="./images/srike.png"/>FinderApply</button>
+                            </form>
+                        <?php else :?>
+                            <?php if($application['company_name'] == $job['company']) :?>
+                                  <h4>Applied on <?php echo $application['date_applied']?></h4>
+                                <?php endif?>
+                     <?php endif?>
+                        <?php endforeach?>
+                     <?php endif?>
                     <button>Save</button>
                  </div>
               </div>

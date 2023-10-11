@@ -25,6 +25,7 @@
         $curr_position = $_POST['curr_position'];
         $employer = $_POST['employer'];
         $pay_per_annum = $_POST['pay_per_annum'];
+        $company_name = $_POST['company_name'];
 
         $email = mysqli_real_escape_string($conn,$email);
         $full_name = mysqli_real_escape_string($conn,$full_name);
@@ -33,7 +34,7 @@
         $curr_position = mysqli_real_escape_string($conn,$curr_position);
         $employer = mysqli_real_escape_string($conn,$employer);
         $pay_per_annum = mysqli_real_escape_string($conn,$pay_per_annum);
-        $company_name = $job_desc['company'];
+        $company_name = mysqli_real_escape_string($conn,$company_name);
 
         $resume_file = $_FILES['file_resume'];
         $resume_name = $resume_file['name'];
@@ -67,7 +68,7 @@
                   $coverDestination = "./coverletterfiles/" . $coverActualName;
 
                   $sql_apply = "INSERT INTO jop_application(full_name,email,pay_per_annum,current_employer,phone,resume_file,cover_letter,current_position
-                  ,years_of_exp,date_applied,company_applied) VALUES('$full_name','$email','$pay_per_annum','$employer','$phone',
+                  ,years_of_exp,date_applied,company_name) VALUES('$full_name','$email','$pay_per_annum','$employer','$phone',
                   '$resumeDestination','$coverDestination','$curr_position','$years',NOW(),'$company_name')";
                   if(mysqli_query($conn,$sql_apply)){
                     move_uploaded_file($resume_tmpName,$resumeDestination);
@@ -107,19 +108,55 @@
       .application_body{
         width:100%;
         height:100vh;
-        top:0;
-        left:0;
-        position: absolute;
       }
       .line-green{
         background-color: green;
         height:10px;
         width:100%;
       }
+      @media (max-width:500px) {
+        .form-box{
+        width:200px;
+        height: max-content;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 2px 2px #000;
+        margin: 3% 0;
+      }
+        .form-box .input{
+         border:2px solid #000;
+         border-radius: 15px;
+         margin: 10px 0;
+         padding: 0 10px;
+         height:25px;
+         width: 150px;
+      }
+      .form-box select{
+        border:2px solid #000;
+         border-radius: 15px;
+         margin: 10px 0;
+         padding: 0 10px;
+         height:25px;
+         width: 150px;
+      }
+      .form-box .input:focus{
+        border: 2px solid green;
+      }
+      .form-box select:focus{
+        border: 2px solid green;
+      }
+      .form-box button{
+        width:100%;
+        background-color: green;
+        height: 35px;
+        color: #fff;
+        border:none;
+        outline: none;
+        border-radius: 20px;
+        cursor: pointer;
+      }  
+      }
       .application-form{
-        top:10%;
-        left:30%;
-        position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -147,7 +184,7 @@
          margin: 10px 0;
          padding: 0 10px;
          height:45px;
-         width: 96%;
+         width: 100%;
       }
       .form-box .input:focus{
         border: 2px solid green;
@@ -205,6 +242,9 @@
              <a href="./index.php" class="exit_btn">Exit</a>
              <small><?php echo $job_desc['position'] . ' ' . "application" . " " . "at" . " " . $job_desc['company'] ?></small>
             <form action="./job_application.php" method="POST" style="padding:8px;margin:10px 0" enctype="multipart/form-data">
+                <label>Company Name</label>
+                <br/>
+                <input class = "input" name="company_name" type = "Text" placeholder="e.g Amazon,Google,etc"/>
                 <label>Full Name</label>
                 <br/>
                 <input  class="input" name="full_name" type="text" placeholder="Full Name"/>

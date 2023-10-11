@@ -10,6 +10,10 @@
     $company_info = mysqli_fetch_assoc($res);
     //print_r($company_info);
    // header('Location:./company.overview.php/Working-At-' . $name);
+   $sql_jobs = "SELECT * FROM job_post WHERE company = '$name'";
+   $response = mysqli_query($conn,$sql_jobs);
+   $company_jobs = mysqli_fetch_all($response,MYSQLI_ASSOC);
+  // print_r($company_jobs);
  }
 
 ?>
@@ -114,6 +118,64 @@
           font-size: 15px;
           line-height: 30px;
         }
+        .post_template{
+            padding: 10px 5px;
+            margin: 5px 0;
+            border-bottom: 1px solid #000;
+            width:50%;
+            box-shadow: 2px 2px 4px #000;
+        }
+        .post_template button{
+            border:2px solid #000;
+            background: transparent;
+            padding: 8px 30px;
+            cursor: pointer;
+            outline: none;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            margin:10px 0;
+        }
+        .post_template button img{
+            width:20px;
+            height:20px;
+        }
+        .top_head{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top_head_left{
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+        }
+        .top_head_left img{
+            width:40px;
+            height:40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #000;
+            object-fit: contain;
+        }
+        .top_head_left h2{
+            font-size: 20px;
+        }
+        .post_info p{
+            margin: 5px 0;
+            font-weight: 500;
+        }
+        .post_info{
+            text-align: left;
+            margin-top: 10px;
+        }
+        .post_info h2{
+            font-size: 18px;
+        }
+        .jobs_available{
+            margin: 10px 5%;
+        }
     </style>
 </head>
 <body>
@@ -157,6 +219,34 @@
             </div>
             <div class="description">
                 <p><?php echo $company_info['company_description']?></p>
+            </div>
+        </div>
+        <div class="jobs_available">
+            <h3>Jobs at <?php echo $company_info['company_name']?></h3>
+            <div class="job_section">
+              <?php foreach($company_jobs as $company_job) :?>
+                <form action="./index.php" method="POST">
+                    <div class="post_template">
+                        <div class="top_head">
+                            <div class="top_head_left">
+                                <img src="<?php echo $company_job['company_logo']?>"/>
+                                <h2 style="margin-left:7px;"><?php echo $company_job['company']?></h2>
+                                <img src="./images/star.png" style="width:10px;height:10px;border:none;"/>
+                            </div>
+                            <img src="./images/bookmark.png" style="height:20px;width:20px;"/>
+                        </div>
+                        <div class="post_info">
+                            <h3><?php echo $company_job['position']?></h3>
+                            <p><?php echo $company_job['job_location'] . ',' . $company_job['company_location']?></p>
+                            <h2>$<?php echo $company_job['salary_lowest'].'-'.'$'.$company_job['salary_highest']?></h2><small>[Employer est]</small>
+                            <br/>
+                            <small>Posted on <?php echo $company_job['date_posted']?></small>
+                        </div>
+                        <input type="hidden" name="job-id-to-submit" value="<?php echo $company_job['id']?>">
+                        <button type="submit" name="submit-job-details"><img src="./images/srike.png"/>Apply</button>
+                     </div>    
+                    </form>
+                <?php endforeach?>
             </div>
         </div>
     </section>
