@@ -55,6 +55,7 @@ $applicants = mysqli_fetch_all($response,MYSQLI_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company | Page</title>
     <link rel="stylesheet" href="./styles.css"/>
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
     <style>
             .company_page{
         width:100%;
@@ -147,8 +148,8 @@ $applicants = mysqli_fetch_all($response,MYSQLI_ASSOC);
             object-fit: cover;
             height:50px;
             position: absolute;
-            top: 60px;
-            left:10px;
+            bottom: 70px;
+            left:20px;
             }
             .description p{
                 font-size:13px;
@@ -181,6 +182,9 @@ $applicants = mysqli_fetch_all($response,MYSQLI_ASSOC);
             object-fit: cover;
             height:80px;
             border:2px solid #d3d3d3;
+            position: absolute;
+            top:90px;
+            left:10px;
         }
         .overview{
             box-shadow: 2px 2px 7px #000;

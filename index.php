@@ -61,6 +61,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinderJob</title>
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./styles.css"/>
     <style>
         .select_area{
@@ -259,7 +260,7 @@
             align-items: center;
         }
         .top_header_box .right_area button{
-           background-color: aqua;
+           background-color: green;
            border: none;
            cursor:pointer;
             padding: 12px 40px;
@@ -409,14 +410,14 @@
                  <div class="right_area">
                  <?php if(isset($_SESSION['user_session'])) :?>
                   <?php foreach($applications as $application) :?>
-                        <?php if($application['company_name'] !== $job['company']) :?>
+                    <?php if($application['company_name'] === $job['company']) :?>
+                             <h4>Applied on <?php echo $application['date_applied']?></h4>
+                        <?php else :?>
+                            <?php if($application['company_name'] !== $job['company'] && $application['application_status']) :?>
                             <form action="./job_application.php" method="POST">
                                 <input type="hidden" name="company-id" value="<?php echo $job['id'] ?>"/>
                                 <button type="submit" name="submit-job-application"><img src="./images/srike.png"/>FinderApply</button>
                             </form>
-                        <?php else :?>
-                            <?php if($application['company_name'] == $job['company']) :?>
-                                  <h4>Applied on <?php echo $application['date_applied']?></h4>
                                 <?php endif?>
                      <?php endif?>
                         <?php endforeach?>

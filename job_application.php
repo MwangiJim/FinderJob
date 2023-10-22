@@ -35,6 +35,7 @@
         $employer = mysqli_real_escape_string($conn,$employer);
         $pay_per_annum = mysqli_real_escape_string($conn,$pay_per_annum);
         $company_name = mysqli_real_escape_string($conn,$company_name);
+        $appln_status = true;
 
         $resume_file = $_FILES['file_resume'];
         $resume_name = $resume_file['name'];
@@ -68,8 +69,8 @@
                   $coverDestination = "./coverletterfiles/" . $coverActualName;
 
                   $sql_apply = "INSERT INTO jop_application(full_name,email,pay_per_annum,current_employer,phone,resume_file,cover_letter,current_position
-                  ,years_of_exp,date_applied,company_name) VALUES('$full_name','$email','$pay_per_annum','$employer','$phone',
-                  '$resumeDestination','$coverDestination','$curr_position','$years',NOW(),'$company_name')";
+                  ,years_of_exp,date_applied,company_name,application_status) VALUES('$full_name','$email','$pay_per_annum','$employer','$phone',
+                  '$resumeDestination','$coverDestination','$curr_position','$years',NOW(),'$company_name','$appln_status')";
                   if(mysqli_query($conn,$sql_apply)){
                     move_uploaded_file($resume_tmpName,$resumeDestination);
                     move_uploaded_file($cover_tmpName,$coverDestination);
@@ -99,6 +100,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinderJob | Application</title>
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
     <style>
       *{
         margin: 0;

@@ -67,13 +67,16 @@
             border-bottom: 1px solid #d3d3d3;
 
         }
+        .user-login button{
+            padding: 14px 30px;
+        }
     }
 </style>
 <body>
     <section class="user-login">
         <?php include './header.php'?>
         <form action="./user-login.php" method="POST" class="form">
-            <h2>User Login</h2>
+            <h2>Login into your Account</h2>
             <label>Email</label>
             <br/>
             <input name="email" type="email" placeholder="Email address"/>
@@ -84,7 +87,7 @@
             <br/>
             <button type="submit" name = "submit-login-user">Login</button>
             <br/>
-            <p>No Account?<a href="./user-register.php">Register Here</a></p>
+            <p>No Account?<a href="./user-register.php">Create an Account</a></p>
         </form>
     </section>
 </body>

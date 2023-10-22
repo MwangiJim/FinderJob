@@ -10,6 +10,7 @@
 <html lang="en">
 <head>
 <link rel="stylesheet" href="./styles.css"/>
+<link rel="icon" href="./images/favicon.ico" type="image/x-icon">
 <style>
     .mid{
         display:flex;
