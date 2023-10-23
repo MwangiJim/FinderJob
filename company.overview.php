@@ -296,6 +296,11 @@
                            <small style="color:gray;font-size:11px;">Job Title: <?php echo $review['job_title']?></small>
                            <br/>
                         </div>
+                        <div class="ratings">
+                            <?php for($i = 1;$i <= $review['rating'];$i++){?>
+                                  <img src="./images/star.png" style="width:20px;height:20px"/>
+                               <?php }?> 
+                        </div>
                         <h4><?php echo $review['headline']?></h4>
                         <h5 style="color:green;font-size:20px;font-weight:bold">Pros</h5>
                         <div class="container">
