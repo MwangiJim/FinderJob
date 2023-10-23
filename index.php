@@ -410,15 +410,14 @@
                  <div class="right_area">
                  <?php if(isset($_SESSION['user_session'])) :?>
                   <?php foreach($applications as $application) :?>
-                    <?php if($application['company_name'] === $job['company']) :?>
+                    <?php if($application['company_name'] === $job['company'] && $application['date_applied']) :?>
                              <h4>Applied on <?php echo $application['date_applied']?></h4>
                         <?php else :?>
-                            <?php if($application['company_name'] !== $job['company'] && $application['application_status']) :?>
                             <form action="./job_application.php" method="POST">
                                 <input type="hidden" name="company-id" value="<?php echo $job['id'] ?>"/>
                                 <button type="submit" name="submit-job-application"><img src="./images/srike.png"/>FinderApply</button>
                             </form>
-                                <?php endif?>
+                             
                      <?php endif?>
                         <?php endforeach?>
                      <?php endif?>

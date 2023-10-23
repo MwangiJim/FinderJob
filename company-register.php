@@ -104,6 +104,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinderJob | Company</title>
     <link rel="stylesheet" href="./styles.css"/>
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
     <style>
         .company_body{
     width:100%;

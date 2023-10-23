@@ -15,7 +15,10 @@
    $company_jobs = mysqli_fetch_all($response,MYSQLI_ASSOC);
   // print_r($company_jobs);
  }
-
+ $sql_fetch_reviews="SELECT * FROM reviews WHERE company_name = '$name'";
+ $res = mysqli_query($conn,$sql_fetch_reviews);
+ $reviews = mysqli_fetch_all($res,MYSQLI_ASSOC);
+ 
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +43,7 @@
             background-position: center;
             background-size: cover;
             width: 100%;
-            height:15vh;
+            height:20vh;
         }
         .container_mid{
             margin: 0 8px;
@@ -123,7 +126,7 @@
             padding: 10px 5px;
             margin: 5px 0;
             border-bottom: 1px solid #000;
-            width:50%;
+            width:90%;
             box-shadow: 2px 2px 4px #000;
         }
         .post_template button{
@@ -176,6 +179,32 @@
         }
         .jobs_available{
             margin: 10px 5%;
+            display:flex;
+            justify-content: space-between;
+        }
+        @media(max-width:500px){
+            .jobs_available{
+                flex-direction: column;
+            }
+        }
+        .left_jobs{
+            flex-basis: 45%;
+        }
+        .right_jobs{
+            flex-basis: 49%;
+        }
+        .container{
+            width:90%;
+            padding:12px 20px;
+            background-color: #fff3f3;
+            border-radius:10px;
+            height:max-content;
+        }
+        .template_review{
+            box-shadow: 4px 4px 8px grey;
+            border-radius:5px;
+            padding:10px;
+            margin: 1% 0;
         }
     </style>
 </head>
@@ -201,7 +230,10 @@
                </div>
                <div class="right_container">
                    <button>Follow</button>
-                   <button>Add A Review</button>
+                  <form action="./review_company.php" method="POST">
+                      <input type="hidden" value="<?php echo $company_info['company_name']?>" name="company_name">
+                     <button type="submit" name="review_btn">Add A Review</button>
+                  </form>
                </div>
             </div>
         </div>
@@ -223,7 +255,8 @@
             </div>
         </div>
         <div class="jobs_available">
-            <h3>Jobs at <?php echo $company_info['company_name']?></h3>
+            <div class="left_jobs">
+            <h3 style="color:green">Jobs at <?php echo $company_info['company_name']?></h3>
             <div class="job_section">
               <?php foreach($company_jobs as $company_job) :?>
                 <form action="./index.php" method="POST">
@@ -248,6 +281,36 @@
                      </div>    
                     </form>
                 <?php endforeach?>
+            </div>
+            </div>
+            <div class="right_jobs">
+                <h2 style="color:green"><?php echo $company_info['company_name']  . " "?>Reviews</h2>
+                <?php foreach($reviews as $review):?>
+                     <div class="template_review">
+                        <div class="user_details">
+                           <h2>Anonymous User</h2>
+                           <small style="color:gray;font-size:11px;">Type: <?php echo $review['employee_type']?></small>
+                           <br/>
+                           <small style="color:gray;font-size:11px;">Status: <?php echo $review['employment_status']?></small>
+                           <br/>
+                           <small style="color:gray;font-size:11px;">Job Title: <?php echo $review['job_title']?></small>
+                           <br/>
+                        </div>
+                        <h4><?php echo $review['headline']?></h4>
+                        <h5 style="color:green;font-size:20px;font-weight:bold">Pros</h5>
+                        <div class="container">
+                          <p><?php echo $review['pros']?></p>
+                        </div>
+                        <h5 style="color:green;font-size:20px;font-weight:bold">Cons</h5>
+                        <div class="container">
+                          <p><?php echo $review['cons']?></p>
+                        </div>
+                        <h5 style="color:green;font-size:20px;font-weight:bold">Recommended Advice</h5>
+                        <div class="container">
+                         <p><?php echo $review['advice']?></p>
+                        </div>
+                     </div>
+                    <?php endforeach ?>
             </div>
         </div>
     </section>
