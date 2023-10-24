@@ -1,7 +1,6 @@
 <?php 
  session_start();
  include './config/myjob.configdb.php';
-
  if(isset($_POST['company-to-view'])){
     $name = $_POST['company-id'];
     //echo $name;
@@ -19,6 +18,7 @@
  $res = mysqli_query($conn,$sql_fetch_reviews);
  $reviews = mysqli_fetch_all($res,MYSQLI_ASSOC);
  
+ //echo date('Y/m/d');
 ?>
 
 <!DOCTYPE html>
@@ -126,7 +126,7 @@
             padding: 10px 5px;
             margin: 5px 0;
             border-bottom: 1px solid #000;
-            width:90%;
+            width:100%;
             box-shadow: 2px 2px 4px #000;
         }
         .post_template button{
@@ -195,10 +195,10 @@
         }
         .container{
             width:90%;
-            padding:12px 20px;
-            background-color: #fff3f3;
             border-radius:10px;
             height:max-content;
+            text-align: left;
+            margin: 2% 0;
         }
         .template_review{
             box-shadow: 4px 4px 8px grey;
@@ -287,30 +287,40 @@
                 <h2 style="color:green"><?php echo $company_info['company_name']  . " "?>Reviews</h2>
                 <?php foreach($reviews as $review):?>
                      <div class="template_review">
-                        <div class="user_details">
-                           <h2>Anonymous User</h2>
-                           <small style="color:gray;font-size:11px;">Type: <?php echo $review['employee_type']?></small>
-                           <br/>
-                           <small style="color:gray;font-size:11px;">Status: <?php echo $review['employment_status']?></small>
-                           <br/>
-                           <small style="color:gray;font-size:11px;">Job Title: <?php echo $review['job_title']?></small>
-                           <br/>
-                        </div>
-                        <div class="ratings">
+                    <div style="display:flex;justify-content:space-between;margin:2% 0;align-items:center;">
+                    <div class="stars" style="display:flex;justify-content:space-between;width:max-content;align-items:center;">
+                        <?php echo $review['rating'] . "." . "0" ?>
+                        <div class="ratings" style="margin-left:5px">
                             <?php for($i = 1;$i <= $review['rating'];$i++){?>
                                   <img src="./images/star.png" style="width:20px;height:20px"/>
                                <?php }?> 
                         </div>
-                        <h4><?php echo $review['headline']?></h4>
-                        <h5 style="color:green;font-size:20px;font-weight:bold">Pros</h5>
+                     </div>
+                     <p><?php echo $review['date_posted']?></p>
+                    </div>
+                     <h4 style="font-size:25px;font-weight:300;"><?php echo $review['headline']?></h4>
+                        <div class="user_details">
+                           <div style="display:flex;justify-content:left;margin:2% 0">
+                            <img src="./images/profile.png" style="height:25px;width:25px;"/>
+                            <div >
+                            <h2 style="font-weight:400;margin-left:5px;font-size:17px">Anonymous User</h2>
+                           <div style="display:flex;justify-content:space-between;margin:1% 0">
+                            <small style="color:gray;font-size:11px;background-color:#d3d3d3;padding:5px 10px;border-radius:6px;margin:0 4px"><?php echo $review['employee_type']?></small>
+                            <small style="color:gray;font-size:11px;background-color:#d3d3d3;padding:5px 10px;border-radius:6px;margin:0 4px"><?php echo $review['job_title']?></small>
+                           </div>
+                            </div>
+                           </div>
+                           <br/>
+                        </div>
+                        <h5 style="color:green;font-size:15px;font-weight:bold">Pros</h5>
                         <div class="container">
                           <p><?php echo $review['pros']?></p>
                         </div>
-                        <h5 style="color:green;font-size:20px;font-weight:bold">Cons</h5>
+                        <h5 style="color:red;font-size:15px;font-weight:bold">Cons</h5>
                         <div class="container">
                           <p><?php echo $review['cons']?></p>
                         </div>
-                        <h5 style="color:green;font-size:20px;font-weight:bold">Recommended Advice</h5>
+                        <h5 style="color:#333;font-size:15px;font-weight:bold">Recommended Advice</h5>
                         <div class="container">
                          <p><?php echo $review['advice']?></p>
                         </div>

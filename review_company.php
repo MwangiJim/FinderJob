@@ -33,12 +33,13 @@ require "./config/myjob.configdb.php";
         $pros = mysqli_real_escape_string($conn,$pros);
         $cons = mysqli_real_escape_string($conn,$cons);
         $advice = mysqli_real_escape_string($conn,$advice);
+        $date = date('Y/m/d');
 
-        $sql_review = "INSERT INTO reviews(company_name,rating,employee_type,employment_status,job_title,headline,pros,cons,advice) 
-        VALUES(?,?,?,?,?,?,?,?,?)";
+        $sql_review = "INSERT INTO reviews(company_name,rating,employee_type,employment_status,job_title,headline,pros,cons,advice,date_posted) 
+        VALUES(?,?,?,?,?,?,?,?,?,?)";
         $stmt = mysqli_stmt_init($conn);
         mysqli_stmt_prepare($stmt,$sql_review);
-        mysqli_stmt_bind_param($stmt,'sssssssss',$companyname,$rating,$employee,$status,$job_title,$headline,$pros,$cons,$advice);
+        mysqli_stmt_bind_param($stmt,'ssssssssss',$companyname,$rating,$employee,$status,$job_title,$headline,$pros,$cons,$advice,$date);
         mysqli_stmt_execute($stmt);
         header('Location:./index.php');
         exit();
@@ -79,6 +80,11 @@ require "./config/myjob.configdb.php";
             display:flex;
             justify-content: space-between;
             margin:4% 13%;
+        }
+        @media(max-width:500px){
+            .survey_box{
+                flex-direction: column;
+            }
         }
         .left_survey{
             background-color: #fff;
@@ -253,7 +259,8 @@ require "./config/myjob.configdb.php";
                     <label>Advice For Management </label>
                     <br/>
                     <textarea  type="text" name="advice" placeholder="Share some suggestions to the management at Company XYZ"></textarea>
-                     <div class="box">
+                    <br/>
+                    <div class="box">
                         <small>All information contributed above will be visible to people who visit Glassdoor.</small>
                      </div>
                      <br/>
