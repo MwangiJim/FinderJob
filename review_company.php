@@ -23,6 +23,9 @@ require "./config/myjob.configdb.php";
         $pros = $_POST['pros'];
         $cons = $_POST['cons'];
         $advice = $_POST['advice'];
+        $ceo_approval = $_POST['ceo_approval'];
+        $business_outlook = $_POST['business_outlook'];
+        $recommend = $_POST['recommend'];
 
         $companyname = mysqli_real_escape_string($conn,$companyname);
         $rating = mysqli_real_escape_string($conn,$rating);
@@ -35,11 +38,11 @@ require "./config/myjob.configdb.php";
         $advice = mysqli_real_escape_string($conn,$advice);
         $date = date('Y/m/d');
 
-        $sql_review = "INSERT INTO reviews(company_name,rating,employee_type,employment_status,job_title,headline,pros,cons,advice,date_posted) 
-        VALUES(?,?,?,?,?,?,?,?,?,?)";
+        $sql_review = "INSERT INTO reviews(company_name,rating,employee_type,employment_status,job_title,headline,pros,cons,advice,date_posted,ceo_approval,recommend,business_outlook) 
+        VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = mysqli_stmt_init($conn);
         mysqli_stmt_prepare($stmt,$sql_review);
-        mysqli_stmt_bind_param($stmt,'ssssssssss',$companyname,$rating,$employee,$status,$job_title,$headline,$pros,$cons,$advice,$date);
+        mysqli_stmt_bind_param($stmt,'sssssssssssss',$companyname,$rating,$employee,$status,$job_title,$headline,$pros,$cons,$advice,$date,$ceo_approval,$recommend,$business_outlook);
         mysqli_stmt_execute($stmt);
         header('Location:./index.php');
         exit();
@@ -84,6 +87,9 @@ require "./config/myjob.configdb.php";
         @media(max-width:500px){
             .survey_box{
                 flex-direction: column;
+            }
+            .right_survey{
+                margin-top: 10px;
             }
         }
         .left_survey{
@@ -260,6 +266,30 @@ require "./config/myjob.configdb.php";
                     <br/>
                     <textarea  type="text" name="advice" placeholder="Share some suggestions to the management at Company XYZ"></textarea>
                     <br/>
+                    <label>Recommend</label>
+                    <div style="display:flex;">
+                    <input type="radio" name="recommend" value="yes"/>
+                    <p>Yes</p>
+                    <input style="margin-left:5px" type="radio" name="recommend" value="no"/>
+                    <p>No</p>
+                    </div>
+                    <br/><br/>
+                    <label>CEO Approval</label>
+                    <div style="display:flex;">
+                    <input type="radio" name="ceo_approval" value="yes"/>
+                    <p>Yes</p>
+                    <input style="margin-left:5px" type="radio" name="ceo_approval" value="no"/>
+                    <p>No</p>
+                    </div>
+                    <br/><br/>
+                    <label>Business Outlook</label>
+                    <div style="display:flex;">
+                    <input type="radio" name="business_outlook" value="yes"/>
+                    <p>Yes</p>
+                    <input style="margin-left:5px" type="radio" name="business_outlook" value="no"/>
+                    <p>No</p>
+                    </div>
+                    <br/><br/>
                     <div class="box">
                         <small>All information contributed above will be visible to people who visit Glassdoor.</small>
                      </div>

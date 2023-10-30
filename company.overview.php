@@ -312,6 +312,20 @@
                            </div>
                            <br/>
                         </div>
+                        <div class="company_rating" style="margin:2% 0;width:70%;display:flex;justify-content:space-between;align-items:center">
+                            <div style="display:flex;justify-content:space-between;align-items:center">
+                                <img src="<?php echo $review['recommend'] === "yes"?'./images/check.png':'./images/cross.png' ?>" style="height:15px;width:15px;margin:0 2px;"/>
+                                <h4 style="font-size:18px;font-weight:400">Recommend</h4>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center">
+                                <img src="<?php echo $review['ceo_approval'] === "yes"?'./images/check.png':'./images/cross.png' ?>" style="height:15px;width:15px;margin:0 2px;" ?>
+                                <h4 style="font-size:18px;font-weight:400">CEO Approval</h4>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center">
+                                <img src="<?php echo $review['business_outlook'] === "yes"?'./images/check.png':'./images/cross.png' ?>" style="height:15px;width:15px;margin:0 2px;" ?>
+                                <h4 style="font-size:18px;font-weight:400">Business Outlook</h4>
+                            </div>
+                        </div>
                         <h5 style="color:green;font-size:15px;font-weight:bold">Pros</h5>
                         <div class="container">
                           <p><?php echo $review['pros']?></p>
