@@ -1,4 +1,4 @@
-# FinderJob
+# FinderJob💥💥💥
 Hello! Welcome to FinderJob.
 A website for developers to search for jobs,employers to post jobs and developers can get more insight about the company
 
@@ -40,6 +40,6 @@ $ view in website
 
 ```
 ### Status
-![Static Badge](https://img.shields.io/badge/development%20-%20green)
+![Static Badge](https://img.shields.io/badge/development%20-%20green)💯💯
 
 
