@@ -101,7 +101,9 @@
             <img src = "./images/search.png" style="margin-right:10px;"/>
             <h4 class="img">Search</h4>
             <img src="./images/bell_plus.png" class="img"/>
-            <img src="./images/profile.png" class="img"/>
+            <?php if(isset($_SESSION['user_session'])):?>
+               <a href="./user_profile.php" style="text-decoration: none;"><img src="./images/profile.png" class="img"/></a>
+            <?php endif ?>
             <?php if(isset($_SESSION['user_session']) || isset($_SESSION['company_session'])) : ?>
                 <form action="./header.php" method="POST">
                     <button type="submit" name="submit-logout"  style="margin-right:15px;"><img src="./images/logout.png"/></button>

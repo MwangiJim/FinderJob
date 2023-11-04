@@ -72,12 +72,12 @@ $applicants = mysqli_fetch_all($response,MYSQLI_ASSOC);
             margin: 0 4%;
         }
         .form_box .form{
-            width:450px;
+            width:90%;
             height: max-content;
         }
         .form_box .form input{
             height: 45px;
-            width:95%;
+            width:97%;
             outline: none;
             border: 1px solid #000;
             border-radius: 8px;
@@ -86,7 +86,7 @@ $applicants = mysqli_fetch_all($response,MYSQLI_ASSOC);
         }
         .form_box .form select{
             height: 50px;
-            width:460px;
+            width:100%;
             outline: none;
             border: 1px solid #000;
             border-radius: 8px;
@@ -382,6 +382,58 @@ $applicants = mysqli_fetch_all($response,MYSQLI_ASSOC);
                         <option value="Hybrid">Hybrid</option>
                     </select>
                     <br/>
+                    <label>Add Necessary Tags</label>
+                    <br/>
+                    <select name="language">
+                        <option>Pick Language</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Ruby">Ruby</option>
+                        <option value="R">R</option>
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="C#">C#</option>
+                        <option value="C/C++">C/C++</option>
+                        <option value="Rust">Rust</option>
+                        <option value="Golang">Golang</option>
+                        <option value="Dart">Dart</option>
+                        <option value="Objective-C">Objective-C</option>
+                        <option value="TypeScript">TypeScript</option>
+                        <option value="HTML/CSS">HTML/CSS</option>
+                        <option value="Production">Production</option>
+                        <option value="SQL">SQL</option>
+                    </select>
+                    <br/>
+                    <select name="framework">
+                        <option>Pick Framework</option>
+                        <option value="React js">React js</option>
+                        <option value="Angular js">Angular js</option>
+                        <option value="Ruby on Rails">Ruby on Rails</option>
+                        <option value="Node js">Node js</option>
+                        <option value="ASP.NET">ASP.NET</option>
+                        <option value="Django">Django</option>
+                        <option value="Vue js">Vue js</option>
+                        <option value="Springboot">Springboot</option>
+                        <option value="Laravel">Laravel</option>
+                        <option value="CodeIgniter">CodeIgniter</option>
+                        <option value="Symfony">Symfony</option>
+                        <option value="React Native">React Native</option>
+                        <option value="Swift">Swift</option>
+                        <option value="Kotlin">Kotlin</option>
+                        <option value="Flutter">Flutter</option>
+                        <option value="Emebedded systems">Emebedded systems</option>
+                        <option value="Unity">Unity</option>
+                        <option value="Management">Management</option>
+                    </select>
+                    <br/>
+                    <select name="level">
+                        <option>Seniority Level</option>
+                        <option value="lead">Lead</option>
+                        <option value="Senior">Senior</option>
+                        <option value="Mid-Level">Mid-Level</option>
+                        <option value="Junior">Junior</option>
+                        <option value="Intern">Intern</option>
+                    </select>
                     <button type="submit" name="create-job-post">Create Job Post</button>
                 </form>
                 </div>

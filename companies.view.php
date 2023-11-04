@@ -223,7 +223,36 @@ if(isset($_POST['submit-search'])){
         <div class="companies-list-box">
             <div class="left-companies-list-box"></div>
             <div class="right-companies-list-box">
-                 <?php if(!$company_found):?>
+                 <?php if(isset($_POST['submit-search']) && !empty($_POST['search-name'])):?>
+                    <div class="company-box">
+                        <div class="company-top-box">
+                            <div class="company-box-left">
+                                <img src="<?php echo $company_found['company_logo_img_path']?>"/>
+                                <div class="company-info">
+                                <form action="./company.overview.php" method="POST">
+                                        <input type="hidden" name="company-id" value="<?php echo $company_found['company_name']?>"/>
+                                        <button style="outline:none;border:none;background:transparent;cursor:pointer;" type="submit" name="company-to-view"><h2><?php echo $company_found['company_name']?></h2></button>
+                                    </form>
+                                    <p>3.8</p>
+                                </div>
+                            </div>
+                            <div class="company-box-right">
+                                <div><h3>181.1K</h3><p>Reviews</p></div>
+                                <div><h3>43.8K</h3><p>Jobs</p></div>
+                                <div><h3>191.8K</h3><p>Salaries</p></div>
+                            </div>
+                        </div>
+                        <div class="location-info">
+                                <div><h3>Location</h3><p><?php echo $company_found['company_location']?></p></div>
+                                <div><h3>Global Company Size</h3><?php echo $company_found['global_company_size']?></div>
+                                <div><h3>Industry</h3><p><?php echo $company_found['company_type']?></p></div>
+                        </div>
+                        <div class="description">
+                            <h3>Description</h3>
+                            <p><?php echo $company_found['company_description']?></p>
+                        </div>
+                    </div>
+                    <?php else :?>
                     <?php foreach($companies as $company) :?>
                     <div class="company-box">
                         <div class="company-top-box">
@@ -254,35 +283,6 @@ if(isset($_POST['submit-search'])){
                         </div>
                     </div>
                  <?php endforeach?>
-                    <?php else :?>
-                        <div class="company-box">
-                        <div class="company-top-box">
-                            <div class="company-box-left">
-                                <img src="<?php echo $company_found['company_logo_img_path']?>"/>
-                                <div class="company-info">
-                                <form action="./company.overview.php" method="POST">
-                                        <input type="hidden" name="company-id" value="<?php echo $company_found['company_name']?>"/>
-                                        <button style="outline:none;border:none;background:transparent;cursor:pointer;" type="submit" name="company-to-view"><h2><?php echo $company_found['company_name']?></h2></button>
-                                    </form>
-                                    <p>3.8</p>
-                                </div>
-                            </div>
-                            <div class="company-box-right">
-                                <div><h3>181.1K</h3><p>Reviews</p></div>
-                                <div><h3>43.8K</h3><p>Jobs</p></div>
-                                <div><h3>191.8K</h3><p>Salaries</p></div>
-                            </div>
-                        </div>
-                        <div class="location-info">
-                                <div><h3>Location</h3><p><?php echo $company_found['company_location']?></p></div>
-                                <div><h3>Global Company Size</h3><?php echo $company_found['global_company_size']?></div>
-                                <div><h3>Industry</h3><p><?php echo $company_found['company_type']?></p></div>
-                        </div>
-                        <div class="description">
-                            <h3>Description</h3>
-                            <p><?php echo $company_found['company_description']?></p>
-                        </div>
-                    </div>
                     <?php endif?>
             </div>
         </div>

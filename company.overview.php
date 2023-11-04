@@ -12,6 +12,7 @@
    $sql_jobs = "SELECT * FROM job_post WHERE company = '$name'";
    $response = mysqli_query($conn,$sql_jobs);
    $company_jobs = mysqli_fetch_all($response,MYSQLI_ASSOC);
+   
   // print_r($company_jobs);
  }
  $sql_fetch_reviews="SELECT * FROM reviews WHERE company_name = '$name'";

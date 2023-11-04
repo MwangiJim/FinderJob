@@ -19,11 +19,15 @@
   $sql_reviews_fetch = "SELECT * FROM reviews WHERE company_name = '$company_name'";
   $response = mysqli_query($conn,$sql_reviews_fetch);
   $reviews = mysqli_fetch_all($response,MYSQLI_ASSOC);
-  $review = mysqli_fetch_assoc($response);
+ //one review fetch
+  $sql_single_review = "SELECT * FROM reviews WHERE company_name = '$company_name'";
+  $rev_response = mysqli_query($conn,$sql_single_review);
+  $one_review = mysqli_fetch_assoc($rev_response);
 
   $sql_company_details = "SELECT * FROM company WHERE company_name='$company_name'";
   $comp_response = mysqli_query($conn,$sql_company_details);
   $company_details = mysqli_fetch_assoc($comp_response);
+ // print_r($single_review);
  }
  else{
     $id_of_first_post = $posts[0]['id'];
@@ -41,6 +45,10 @@
     $sql_company_details = "SELECT * FROM company WHERE company_name='$company_name'";
     $comp_response = mysqli_query($conn,$sql_company_details);
     $company_details = mysqli_fetch_assoc($comp_response);
+    //one review fetch
+  $sql_single_review = "SELECT * FROM reviews WHERE company_name = '$company_name'";
+  $rev_response = mysqli_query($conn,$sql_single_review);
+  $one_review = mysqli_fetch_assoc($rev_response);
  }
 
  if(isset($_POST['submit-search-value'])){
@@ -53,7 +61,7 @@
         $location = $_POST['Location'];
         //echo $keyword;
 
-         $sql_search_val = "SELECT * FROM job_post WHERE position = '$keyword'";
+         $sql_search_val = "SELECT * FROM job_post WHERE language = '$keyword'";
          if(!mysqli_query($conn,$sql_search_val)){
             header('Location:./index.php?error=Errorsearch&CouldntFind');
             exit();
@@ -93,8 +101,10 @@
         .select_area select{
             width:300px;
             height:45px;
-            border-radius: 10px;
+            border-radius: 15px;
             padding: 0 15px;
+            border:none;
+            background: #d3d3d3;
         }
         .select_area img{
             width: 20px;
@@ -149,6 +159,21 @@
             }
             .right_info_area{
                 background-color: #fff;
+            }
+            .ratings_box{
+                flex-direction:column;
+            }
+            .company_rev{
+                flex-direction: column;
+            }
+            .company_box{
+                flex-direction: column;
+            }
+            .company_left{
+                flex-basis: 100%;
+            }
+            .company_right{
+                flex-basis: 100%;
             }
         }
         .left_info_area{
@@ -351,7 +376,7 @@
             margin: 3% 0;
         }
         .ratings_left{
-            flex-basis: 45%;
+            flex-basis: 50%;
             display: flex;
             justify-content: space-between;
             flex-direction: column;
@@ -370,6 +395,21 @@
         .rating_col h3{
             font-size: 15px;
             font-weight:300;
+        }
+        .tags{
+            display:flex;
+            justify-content: left;
+            align-items: center;
+            margin:2% 0;
+        }
+        .tags .tag{
+            background-color: green;
+            color: #fff;
+            border-radius:5px;
+            padding:5px 7px;
+            margin:0 4px;
+            font-size:12px;
+            font-weight:200;
         }
     </style>
 </head>
@@ -429,7 +469,7 @@
             </div>
           <div class="box_jobs">
             <div class="left_info_area">
-               <?php if($job_posts_search) :?>
+               <?php if(isset($_POST['submit-search-value']) && !empty($_POST['search-keyword'])) :?>
                 <?php foreach($job_posts_search as $post) : ?>
                     <form action="./index.php" method="POST">
                     <div class="post_template">
@@ -447,6 +487,11 @@
                             <h2>$<?php echo $post['salary_lowest'].'-'.'$'.$post['salary_highest']?></h2><small>[Employer est]</small>
                             <br/>
                             <small>Posted on <?php echo $post['date_posted']?></small>
+                        </div>
+                        <div class="tags">
+                            <div class="tag"><?php echo $post['language']?></div>
+                            <div class="tag"><?php echo $post['framework']?></div>
+                            <div class="tag"><?php echo $post['level']?></div>
                         </div>
                         <input type="hidden" name="job-id-to-submit" value="<?php echo $post['id']?>">
                         <button type="submit" name="submit-job-details"><img src="./images/srike.png"/>Apply</button>
@@ -471,6 +516,11 @@
                             <h2>$<?php echo $post['salary_lowest'].'-'.'$'.$post['salary_highest']?></h2><small>[Employer est]</small>
                             <br/>
                             <small>Posted on <?php echo $post['date_posted']?></small>
+                        </div>
+                        <div class="tags">
+                            <div class="tag"><?php echo $post['language']?></div>
+                            <div class="tag"><?php echo $post['framework']?></div>
+                            <div class="tag"><?php echo $post['level']?></div>
                         </div>
                         <input type="hidden" name="job-id-to-submit" value="<?php echo $post['id']?>">
                         <button type="submit" name="submit-job-details"><img src="./images/srike.png"/>Apply</button>
@@ -562,6 +612,10 @@
                     <h2><?php echo $company_details['company_name']?> Ratings</h2>
                     <?php foreach($reviews as $review) :?>
                         <?php
+                        $sum_review=0;
+                        $avg = 0;
+                        $sum_review += $review['rating'];
+                        $avg = $sum_review/count($reviews);
                          $recommendations_count = 0;
                          $ceo_approval = 0;
                          if($review['recommend'] === 'yes'){
@@ -571,26 +625,31 @@
                             $ceo_approval += 1;
                          }
                         ?>
+                        <?php endforeach?>
                    <div class="ratings_box">
                     <div class="ratings_left">
                         <div class="stars" style="display:flex;justify-content:left;align-items:center;margin:2% 0">
-                            <?php echo $review['rating'] . '.' . '0'?>
-                              <div class="stars" style="display:flex;justify-content:space-between;align-items:center;">
-                                <?php for($i=1;$i<=$review['rating'];$i++) {?>
-                                    <img src="./images/star.png" style="height:17px;width:17px;margin:0 5px"/>
+                            <?php echo count($reviews) >=1?$avg . '.':'0.0'?>
+                              <?php if(count($reviews) >=1) :?>
+                                  <div class="stars" style="display:flex;justify-content:space-between;align-items:center;">
+                                     <?php for($i=1;$i<=$avg;$i++) {?>
+                                       <img src="./images/star.png" style="height:17px;width:17px;margin:0 5px"/>
                                     <?php }?>
-                              </div>
+                                  </div>
+                                  <?php else :?>
+                                    <h3>N/A</h3>
+                                <?php endif ?>
                         </div>
                         <div class="company_reviews_box">
                               <div class="review_box">
                                 <div class="circle" style="align-items:center;height:80px;width:80px;border-radius:50%;border:5px solid #000;">
-                                    <h1 style="text-align:center;margin-top:25px"><?php echo $recommendations_count/count($reviews) * 100 . '%'?></h1>  
+                                    <h1 style="text-align:center;margin-top:25px"><?php echo count($reviews) >= 1?$recommendations_count/count($reviews)* 100 . '%':0 * 100 . '%'?></h1>  
                                 </div>
                                 <h5>Recommend A Friend</h5>
                               </div>
                               <div class="review_box">
                                 <div class="circle" style="height:80px;width:80px;border-radius:50%;border:5px solid #000;">
-                                <h1 style="text-align:center;margin-top:25px"><?php echo $ceo_approval/count($reviews) * 100 . '%'?></h1> 
+                                <h1 style="text-align:center;margin-top:25px"><?php echo count($reviews)>=1?$ceo_approval/count($reviews)* 100 . '%':0 * 100 . '%'?></h1> 
                                 </div>
                                 <h5>Approve of CEO</h5>
                               </div>
@@ -618,22 +677,29 @@
                         </div>
                     </div>
                    </div>
-                   <?php endforeach?>
                 </div>
                 <div class="company_rev" style="margin:2% 0">
                    <h2><?php echo $company_details['company_name']?> Reviews</h2>
                    <div class="rate_box" style="display:flex;justify-content:space-between;margin-top:15px;">
                     <div class="rate_left" style="flex-basis:45%">
                         <h5 style="color:#000;padding:3px 5px;border-radius:5px;width:10%;font-weight:200;background:rgb(99, 175, 99);">Pros</h5>
-                       <?php foreach($reviews as $rev) :?>
-                          <p><?php echo '"' . $rev['pros'] . '"'?></p>
+                       <?php if(count($reviews) >= 1): ?>
+                         <?php foreach($reviews as $rev) :?>
+                          <p><?php echo '"' . $rev['pros'] . '"' . '<br/>'?></p>
                         <?php endforeach ?>
+                        <?php else :?>
+                            <h1>N/A</h1>
+                        <?php endif ?>
                     </div>
                     <div class="rate_right"  style="flex-basis:45%">
-                       <h5 style="color:#000;padding:3px 5px;border-radius:5px;width:10%;font-weight:200;background:#f44336;">Cons</h5>
-                       <?php foreach($reviews as $rev) :?>
-                          <p><?php echo '"' . $rev['cons'] . '"'?></p>
-                        <?php endforeach ?>
+                       <h5 style="color:#000;padding:3px 7px;border-radius:5px;width:10%;font-weight:200;background:#f44336;">Cons</h5>
+                        <?php if(count($reviews) >= 1): ?>
+                           <?php foreach($reviews as $rev) :?>
+                            <p><?php echo '"' . $rev['cons'] . '"' . '<br/>'?></p>
+                            <?php endforeach ?>
+                             <?php else :?>
+                               <h1>N/A</h1>
+                        <?php endif ?>
                     </div>
                    </div>
                 </div>
